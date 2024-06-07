@@ -1,0 +1,24 @@
+[
+    {
+        "destino": "Cartagena",
+        "fecha_inicio": "2024-06-01",
+        "fecha_final": "2024-06-10",
+        "presupuesto_diario": 150000,
+        "gastos": [
+            {
+                "fecha": "2024-06-03",
+                "monto": 50000,
+                "tipo": "Alimentación",
+                "metodo_pago": "Efectivo",
+                "moneda": "COP"
+            }
+        ]
+    },
+    {
+        "destino": "Bogotá",
+        "fecha_inicio": "2024-07-15",
+        "fecha_final": "2024-07-20",
+        "presupuesto_diario": 200000,
+        "gastos": []
+    }
+]
