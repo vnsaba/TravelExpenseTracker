@@ -1,29 +1,56 @@
 from datetime import datetime
-from ..enums.TipoMoneda import TipoMoneda
-from ..entity.Gasto import Gasto
-from ..controller.conversorMoneda import ConversorMoneda
-class GastoController:
+from enums.TipoMoneda import TipoMoneda
+from enums.MetodoPago import MetodoPago
+from enums.TipoGasto import TipoGasto
+from entity.Gasto import Gasto
+from controller.ConversorMoneda import ConversorMoneda
+from controller.ViajeController import ViajeController
 
-    def __init__(self, viaje):
-            self.viaje_actual = viaje
+class GastoController():
 
-    def registrar_gasto(self, fecha, monto, tipo, metodo_pago, moneda):
+    def __init__(self):
+        self.__viaje_controller = ViajeController()
+    
+    def verificar_viaje(self, numero: str):
+        viaje = self.__viaje_controller.buscar_viaje(numero)
+        if viaje == None:
+            print("El viaje no existe.")
+            return False
+        return True
 
-        fecha_gasto = datetime.strptime(fecha, '%Y-%m-%d')
-        if not (self.viaje_actual.getFechaInicio() <= fecha_gasto <= self.viaje_actual.getFechaFinal()):
-            print("La fecha del gasto no está dentro del rango del viaje.")
-            return
+    def registrar_gasto(self, fecha: datetime, monto: float, divisa: TipoMoneda, 
+                       metodo_pago: MetodoPago, tipo_gasto: TipoGasto):
+        if divisa == TipoMoneda.COP:
+            gasto = Gasto(fecha, monto, divisa, metodo_pago, tipo_gasto)
+        elif divisa == TipoMoneda.USD:
+            conversor = ConversorMoneda.obtener_conversor(divisa)
+            monto_convertido = conversor.convertir(monto)
+            gasto = Gasto(fecha, monto_convertido, divisa, metodo_pago, tipo_gasto)
+        elif divisa == TipoMoneda.EUR:
+            conversor = ConversorMoneda.obtener_conversor(divisa)
+            monto_convertido = conversor.convertir(monto)
+            gasto = Gasto(fecha, monto_convertido, divisa, metodo_pago, tipo_gasto)
+        else:
+            print("La moneda no es válida.")
+        self.__viaje_controller.agregar_gasto(gasto)
+        # fecha_gasto = datetime.strptime(fecha, '%Y-%m-%d')
+        # if not (self.viaje_actual.get_fecha_inicio() <= fecha_gasto <= self.viaje_actual.get_fecha_final()):
+        #     print("La fecha del gasto no está dentro del rango del viaje.")
+        #     return
 
-        if monto <= 0:
-            print("El monto del gasto debe ser mayor que 0.")
-            return
-        conversor = ConversorMoneda.obtener_conversor(moneda)
-        monto_convertido = conversor.convertir(monto)
-        gasto = Gasto(fecha_gasto, monto_convertido, tipo, metodo_pago, moneda)
-        self.viaje_actual.agregar_gasto(gasto)        
-        # Mostrar la diferencia con el presupuesto diario actualizado
-        print("Gasto agregado con éxito.")
-        print("Diferencia con el presupuesto diario:", self.viaje_actual.mostrar_diferencia_presupuesto())
+        # if monto <= 0:
+        #     print("El monto del gasto debe ser mayor que 0.")
+        #     return
+        # conversor = ConversorMoneda.obtener_conversor(divisa)
+        # monto_convertido = conversor.convertir(monto)
+        # gasto = Gasto(fecha_gasto, monto_convertido, tipo, metodo_pago, divisa)
+        # self.viaje_actual.agregar_gasto(gasto)        
+        # # Mostrar la diferencia con el presupuesto diario actualizado
+        # print("Gasto agregado con éxito.")
+        # print("Diferencia con el presupuesto diario:", self.viaje_actual.mostrar_diferencia_presupuesto())
+        # return gasto
+        
+        
 
 
 

@@ -1,10 +1,17 @@
-class Gasto:
-    def __init__(self, fecha, valor, moneda, metodo_pago, tipo_gasto):
-        self._fecha = fecha
-        self._valor = valor
-        self._moneda = moneda
-        self._metodo_pago = metodo_pago
-        self._tipo_gasto = tipo_gasto
+from datetime import datetime
+from enums.MetodoPago import MetodoPago
+from enums.TipoMoneda import TipoMoneda
+from enums.TipoGasto import TipoGasto
+
+
+class Gasto():
+    def __init__(self, fecha: datetime, valor: float, divisa: TipoMoneda, 
+                 metodo_pago: MetodoPago, tipo_gasto: TipoGasto):
+        self.__fecha = fecha
+        self.__valor = valor
+        self.__divisa = divisa
+        self.__metodo_pago = metodo_pago
+        self.__tipo_gasto = tipo_gasto
 
     # def to_dict(self):
     #     return {
@@ -15,29 +22,29 @@ class Gasto:
     #         "moneda": self._moneda
     #     }
 
-    def getFecha(self):
-        return self._fecha
+    def get_fecha(self):
+        return self.__fecha
 
-    def getValor(self):
-        return self._valor
+    def get_valor(self):
+        return self.__valor
 
-    def setValor(self, valor):
-        self._valor = valor
+    def set_valor(self, valor):
+        self.__valor = valor
 
-    def getMoneda(self):
-        return self._moneda
+    def get_divisa(self):
+        return self.__divisa
 
-    def setMoneda(self, moneda):
-        self._moneda = moneda
+    def set_divisa(self, moneda):
+        self.__divisa = moneda
 
-    def getMetodoPago(self):
-        return self._metodo_pago
+    def get_metodo_pago(self):
+        return self.__metodo_pago
 
-    def setMetodoPago(self, metodo_pago):
-        self._metodo_pago = metodo_pago
+    def set_metodo_pago(self, metodo_pago):
+        self.__metodo_pago = metodo_pago
 
-    def getTipoGasto(self):
-        return self._tipo_gasto
+    def get_tipo_gasto(self):
+        return self.__tipo_gasto
 
-    def setTipoGasto(self, tipo_gasto):
-        self._tipo_gasto = tipo_gasto
+    def set_tipo_gasto(self, tipo_gasto):
+        self.__tipo_gasto = tipo_gasto

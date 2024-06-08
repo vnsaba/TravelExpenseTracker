@@ -1,4 +1,6 @@
-class TipoGasto:
+from enum import Enum
+
+class TipoGasto(Enum):
     TRANSPORTE = "Transporte"
     ALOJAMIENTO = "Alojamiento"
     ALIMENTACION = "Alimentación"

@@ -1,10 +1,10 @@
 import json
 from datetime import datetime
-from ..entity.Viaje import Viaje
-from ..entity.Gasto import Gasto
+from entity.Viaje import Viaje
+from entity.Gasto import Gasto
 
-class FileManager:
-    def __init__(self, filepath=''):
+class FileManager():
+    def __init__(self, filepath='../archivos/viajes.json'):
             self.filepath = filepath
 
     def cargar_viajes(self):

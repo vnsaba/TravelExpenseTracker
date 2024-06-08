@@ -1,6 +1,6 @@
-from ..service.conversorMonedaDolar import ConversorMonedaDolar
-from ..service.conversorMonedaEuro import ConversorMonedaEuro
-from ..enums.TipoMoneda import TipoMoneda
+from service.ConversorMonedaDolar import ConversorMonedaDolar
+from service.ConversorMonedaEuro import ConversorMonedaEuro
+from enums.TipoMoneda import TipoMoneda
 
 class ConversorMoneda():
     @staticmethod
