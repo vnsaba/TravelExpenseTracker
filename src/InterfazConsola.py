@@ -14,28 +14,26 @@ class InterfazConsola():
 
     def formulario_crear_viaje(self):
         """Permite al usuario crear un nuevo viaje"""
-        numero = str(input("Ingrese el número del viaje: "))  # Convertir a cadena
         destino = input("Ingrese el destino del viaje: ")
         fecha_inicio = self._ingresar_fecha("Ingrese la fecha de inicio del viaje (YYYY-MM-DD): ")
         fecha_fin = self._ingresar_fecha("Ingrese la fecha de fin del viaje (YYYY-MM-DD): ")
         presupuesto = self._ingresar_valor("Ingrese el presupuesto diario del viaje: ")
         divisa = self._seleccionar_opcion("Monedas disponibles:", TipoMoneda)
 
-        self.guardar_viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+        self.guardar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto)
 
-    def guardar_viaje (self, numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario):
+    def guardar_viaje (self, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario):
         """
             Registra un nuevo viaje con los detalles proporcionados.
 
             params:
-                numero (int): Número único asignado al viaje.
                 destino (str): Nombre del destino del viaje.
                 divisa (TipoDivisa): Tipo de divisa en la que se manejará el presupuesto del viaje.
                 fecha_inicio (datetime): Fecha de inicio del viaje.
                 fecha_fin (datetime): Fecha de finalización del viaje.
                 presupuesto_diario (float): Presupuesto diario asignado para el viaje.
         """
-        viaje_creado = self.viaje_controller.registrar_viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
+        viaje_creado = self.viaje_controller.registrar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
         if viaje_creado:
             print("¡Buen viaje!")
             self.viaje_existe = True

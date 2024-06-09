@@ -11,12 +11,11 @@ class ViajeController():
         self.file_manager = FileManager()
         self.__viajes = self.file_manager.cargar_viajes()
             
-    def registrar_viaje(self, numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto):
+    def registrar_viaje(self, destino, divisa, fecha_inicio, fecha_fin, presupuesto):
         """
         Registra un nuevo viaje con los detalles proporcionados.
 
         params:
-            numero (int): Número único asignado al viaje.
             destino (str): Nombre del destino del viaje.
             divisa (TipoDivisa): Tipo de divisa en la que se manejará el presupuesto del viaje.
             fecha_inicio (datetime): Fecha de inicio del viaje.
@@ -32,7 +31,7 @@ class ViajeController():
 
         if self.verificar_fecha_inicio(fecha_inicio) and self.verificar_fecha_final(fecha_fin, fecha_inicio) and self.verificar_destino(destino):
             if self.verificar_fecha_viaje(fecha_inicio, fecha_fin):
-                self.__viaje = Viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+                self.__viaje = Viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto)
                 self.__viajes.append(self.__viaje)
                 return True
         return False
