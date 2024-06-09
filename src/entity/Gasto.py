@@ -1,26 +1,14 @@
 from datetime import datetime
-from enums.MetodoPago import MetodoPago
-from enums.TipoMoneda import TipoMoneda
-from enums.TipoGasto import TipoGasto
-
+from ..enums.MetodoPago import MetodoPago
+from ..enums.TipoGasto import TipoGasto
 
 class Gasto():
-    def __init__(self, fecha: datetime, valor: float, divisa: TipoMoneda, 
+    def __init__(self, fecha: datetime, valor: float, 
                  metodo_pago: MetodoPago, tipo_gasto: TipoGasto):
         self.__fecha = fecha
         self.__valor = valor
-        self.__divisa = divisa
         self.__metodo_pago = metodo_pago
         self.__tipo_gasto = tipo_gasto
-
-    # def to_dict(self):
-    #     return {
-    #         "fecha": self._fecha.strftime('%Y-%m-%d'),
-    #         "monto": self._valor,
-    #         "tipo": self._tipo_gasto,
-    #         "metodo_pago": self._metodo_pago,
-    #         "moneda": self._moneda
-    #     }
 
     def get_fecha(self):
         return self.__fecha
@@ -30,12 +18,6 @@ class Gasto():
 
     def set_valor(self, valor):
         self.__valor = valor
-
-    def get_divisa(self):
-        return self.__divisa
-
-    def set_divisa(self, moneda):
-        self.__divisa = moneda
 
     def get_metodo_pago(self):
         return self.__metodo_pago
@@ -48,3 +30,4 @@ class Gasto():
 
     def set_tipo_gasto(self, tipo_gasto):
         self.__tipo_gasto = tipo_gasto
+

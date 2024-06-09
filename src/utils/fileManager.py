@@ -1,35 +1,50 @@
 import json
-from datetime import datetime
-from entity.Viaje import Viaje
-from entity.Gasto import Gasto
+from pathlib import Path
+from ..utils.ViajeSerializer import ViajeSerializer
 
-class FileManager():
-    def __init__(self, filepath='../archivos/viajes.json'):
-            self.filepath = filepath
+class FileManager:
+
+    def __init__(self, file_path='viajes.json'):
+        self.file_path = Path(file_path)
+
+    def guardar_viajes(self, viaje):
+        """
+        Guarda el viaje en un archivo JSON, agregando al archivo existente sin sobrescribirlo completamente.
+
+        params:
+            viaje (Viaje): Objeto de viaje a guardar
+
+        Returns:
+            bool: True si la operación fue exitosa, False en caso de error.
+        """
+        try:
+            # Cargar viajes existentes si el archivo existe
+            existing_data = []
+            if self.existe_archivo():
+                with self.file_path.open('r', encoding='utf-8') as file:
+                    existing_data = json.load(file)
+            
+            new_data = ViajeSerializer.to_dict(viaje)
+            existing_data.append(new_data)
+            
+            with self.file_path.open('w', encoding='utf-8') as file:
+                json.dump(existing_data, file, indent=4, ensure_ascii=False)
+            return True
+        except Exception as e:
+            print(f"Error al escribir los viajes en el archivo: {e}")
+            return False
+        
+    def existe_archivo(self):
+        """
+        Verifica si el archivo JSON existe.
+
+        Returns:
+            bool: True si el archivo existe, False en caso contrario.
+        """
+        return self.file_path.exists()
 
     def cargar_viajes(self):
-        try:
-            with open(self.filepath, 'r') as file:
+        if self.existe_archivo():
+            with self.file_path.open('r', encoding='utf-8') as file:
                 data = json.load(file)
-                return [
-                    Viaje(
-                        v['destino'],
-                        datetime.strptime(v['fecha_inicio'], '%Y-%m-%d'),
-                        datetime.strptime(v['fecha_final'], '%Y-%m-%d'),
-                        v['presupuesto_diario'],
-                        [Gasto(**g) for g in v.get('gastos', [])]  # Asumiendo que Gasto puede ser inicializado de esta manera
-                    ) for v in data
-                ]
-        except FileNotFoundError:
-            return []
-        except json.JSONDecodeError:
-            print("Error al decodificar el archivo JSON.")
-            return []
-
-    def guardar_viajes(self, viajes):
-        with open(self.filepath, 'w') as file:
-            json.dump([viaje.to_dict() for viaje in viajes], file, default=str, indent=4)
-
-
-
-
+                return [ViajeSerializer.from_dict(viaje_data) for viaje_data in data]

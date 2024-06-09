@@ -1,93 +1,187 @@
-from entity.Viaje import Viaje
-from entity.Gasto import Gasto
-from controller.GastoController import GastoController
-from controller.ViajeController import ViajeController
+from datetime import datetime
+from .controller.gastoController import GastoController
+from .controller.viajeController import ViajeController
+from .controller.ReporteController import ReporteController
+from .enums.TipoGasto import TipoGasto
+from .enums.MetodoPago import MetodoPago
+from .enums.TipoMoneda import TipoMoneda
+
 class InterfazConsola():
     def __init__(self):
-        self.viaje = None
-        self.gasto_controller = GastoController()
+        self.viaje_existe = False
         self.viaje_controller = ViajeController()
+        self.gasto_controller = GastoController(self.viaje_controller)
+
+    def formulario_crear_viaje(self):
+        """Permite al usuario crear un nuevo viaje"""
+        numero = str(input("Ingrese el número del viaje: "))  # Convertir a cadena
+        destino = input("Ingrese el destino del viaje: ")
+        fecha_inicio = self._ingresar_fecha("Ingrese la fecha de inicio del viaje (YYYY-MM-DD): ")
+        fecha_fin = self._ingresar_fecha("Ingrese la fecha de fin del viaje (YYYY-MM-DD): ")
+        presupuesto = self._ingresar_valor("Ingrese el presupuesto diario del viaje: ")
+        divisa = self._seleccionar_opcion("Monedas disponibles:", TipoMoneda)
+
+        self.guardar_viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+
+    def guardar_viaje (self, numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario):
+        """
+            Registra un nuevo viaje con los detalles proporcionados.
+
+            params:
+                numero (int): Número único asignado al viaje.
+                destino (str): Nombre del destino del viaje.
+                divisa (TipoDivisa): Tipo de divisa en la que se manejará el presupuesto del viaje.
+                fecha_inicio (datetime): Fecha de inicio del viaje.
+                fecha_fin (datetime): Fecha de finalización del viaje.
+                presupuesto_diario (float): Presupuesto diario asignado para el viaje.
+        """
+        viaje_creado = self.viaje_controller.registrar_viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
+        if viaje_creado:
+            print("¡Buen viaje!")
+            self.viaje_existe = True
+            self.mostrar_menu_viaje_Creado()
+        else:
+            print("El viaje no pudo ser registrado debido a errores en las fechas o el destino.")
+        
 
 
-    def añadir_gasto_a_viaje(self):
-        if self.viaje is None:
-            print("Primero debe crear un viaje.")
+    def formulario_crear_gasto(self):
+        """Permite al usuario agregar un gasto al viaje actualmente activo"""
+        if self.viaje_existe is False:
+            print("Primero debe crear un viaje")
             return
 
-        fecha = input("Ingrese la fecha del gasto (YYYY-MM-DD): ")
-        valor = float(input("Ingrese el valor del gasto: "))
+        fecha = self._ingresar_fecha("Ingrese la fecha del gasto (YYYY-MM-DD): ")
+        valor = self._ingresar_valor("Ingrese el valor del gasto: ")
+        tipo = self._seleccionar_opcion("Tipo de gastos disponibles:", TipoGasto)
+        metodo_pago = self._seleccionar_opcion("Métodos de pago disponibles:", MetodoPago)
+        self.guardar_gasto(fecha, valor, metodo_pago, tipo)    
 
-        # Opciones predefinidas para el tipo de gasto
-        tipo_gastos = ["transporte", "alojamiento", "alimentación", "entretenimiento", "compras"]
-        print("Tipo de gastos disponibles:")
-        for i, tipo in enumerate(tipo_gastos, 1):
-            print(f"{i}. {tipo}")
-        tipo_idx = int(input("Seleccione el tipo de gasto (ingrese el número correspondiente): "))
-        while tipo_idx not in range(1, len(tipo_gastos) + 1):
-            print("Selección no válida. Por favor, ingrese un número dentro del rango.")
-            tipo_idx = int(input("Seleccione el tipo de gasto (ingrese el número correspondiente): "))
-        tipo = tipo_gastos[tipo_idx - 1]
+    def guardar_gasto (self, fecha, valor, metodo_pago, tipo_gasto ):
+        """
+        Registra un nuevo gasto con los detalles proporcionados.
 
-        # Opciones predefinidas para el método de pago
-        metodos_pago = ["efectivo", "tarjeta"]
-        print("Métodos de pago disponibles:")
-        for i, metodo in enumerate(metodos_pago, 1):
-            print(f"{i}. {metodo}")
-        metodo_idx = int(input("Seleccione el método de pago (ingrese el número correspondiente): "))
-        while metodo_idx not in range(1, len(metodos_pago) + 1):
-            print("Selección no válida. Por favor, ingrese un número dentro del rango.")
-            metodo_idx = int(input("Seleccione el método de pago (ingrese el número correspondiente): "))
-        metodo_pago = metodos_pago[metodo_idx - 1]
+        params:
+            fecha (datetime): Fecha en la que se realizó el gasto.
+            valor (float): Monto del gasto.
+            metodo_pago (MetodoPago): Método de pago utilizado para el gasto.
+            tipo_gasto (TipoGasto): Tipo de gasto realizado.
 
-        # Opciones predefinidas para la moneda
-        monedas = ["USD", "EUR", "COP"]
-        print("Monedas disponibles:")
-        for i, divisa in enumerate(monedas, 1):
-            print(f"{i}. {divisa}")
-        moneda_idx = int(input("Seleccione la moneda del gasto (ingrese el número correspondiente): "))
-        while moneda_idx not in range(1, len(monedas) + 1):
-            print("Selección no válida. Por favor, ingrese un número dentro del rango.")
-            moneda_idx = int(input("Seleccione la moneda del gasto (ingrese el número correspondiente): "))
-        divisa = monedas[moneda_idx - 1]
-
-        self.gasto_controller.registrar_gasto(fecha, valor, tipo, metodo_pago, divisa)
+        """
+        gasto_creado =  self.gasto_controller.registrar_gasto(fecha, valor, metodo_pago, tipo_gasto)
+        if gasto_creado :
+            print("Gasto agregado con éxito.")
+            print("Diferencia con el presupuesto diario:", self.gasto_controller.diferencia_presupuesto())
+        else:
+            print("Ha ocurrido un error al crear el gasto")
         
-        def crear_viaje(self):
-            numero = str(input("Ingrese el número del viaje: "))
-            destino = input("Ingrese el destino del viaje: ")
-            fecha_inicio = input("Ingrese la fecha de inicio del viaje (YYYY-MM-DD): ")
-            fecha_fin = input("Ingrese la fecha de fin del viaje (YYYY-MM-DD): ")
-            presupuesto = input("Ingrese el presupuesto diario del viaje: ")
-            divisa = (input("Ingrese la moneda del presupuesto: ")).upper()
-            self.viaje = Viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
-            self.viaje_controller.registrar_viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
 
-  
+    def _ingresar_fecha(self, mensaje):
+        """
+        Solicita al usuario ingresar una fecha en el formato especificado.
+
+        params:
+            mensaje (str): Mensaje que indica al usuario qué debe ingresar.
+
+        Returns:
+            datetime: Objeto datetime que representa la fecha ingresada por el usuario.
+        """
+        while True:
+            fecha_str = input(mensaje)
+            try:
+                fecha = datetime.strptime(fecha_str, "%Y-%m-%d")
+                return fecha
+            except ValueError:
+                print("Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")
+
+    def _ingresar_valor(self, mensaje):
+        """
+        Solicita al usuario ingresar un valor numérico.
+
+        params:
+            mensaje (str): Mensaje que indica al usuario qué debe ingresar.
+
+        Returns:
+            float: Valor numérico ingresado por el usuario.
+        """
+        while True:
+            valor_str = input(mensaje)
+            try:
+                valor = float(valor_str)
+                return valor
+            except ValueError:
+                print("Valor incorrecto. Por favor, ingrese un número válido.")
+
+    def _seleccionar_opcion(self, mensaje, opciones_enum):
+        """
+        Muestra las opciones disponibles y permite al usuario seleccionar una.
+
+        param:
+            mensaje (str): Mensaje que indica al usuario qué debe seleccionar.
+            opciones_enum (Enum): Enumeración que contiene las opciones disponibles.
+
+        Returns:
+            Enum: Opción seleccionada por el usuario.
+        """
+        opciones = list(opciones_enum)
+        print(mensaje)
+        for i, opcion in enumerate(opciones, 1):
+            print(f"{i}. {opcion.value}")
+        while True:
+            opcion_idx = int(input("Seleccione una opción (ingrese el número correspondiente): "))
+            if opcion_idx in range(1, len(opciones) + 1):
+                return opciones[opcion_idx - 1]
+            else:
+                print("Selección no válida. Por favor, ingrese un número dentro del rango.")
+
+    def salir(self):
+        """Guarda la información del viaje en el archivo antes de salir de la aplicación."""
+        if self.viaje_controller.guardar_viajes_en_archivo():
+            print("¡La información del viaje se ha guardado correctamente!")
+        else:
+            print("Error al guardar la información del viaje en el archivo.")
+    
     def mostrar_menu(self):
         while True:
-            print("\nMenu de la aplicación de registro de gastos de viaje")
+            print("\nMenu de la aplicación")
             print("1. Crear un nuevo viaje")
-            print("2. Añadir un gasto")
-            print("3. Ver reporte diario")
-            print("4. Ver reporte por tipo de gasto")
-            print("5. Salir")
+            print("2. Ver historial de viajes")
             opcion = input("Seleccione una opción: ")
-
             if opcion == "1":
-              #  self.crear_viaje()
-                pass
+               self.formulario_crear_viaje()
             elif opcion == "2":
-                self.añadir_gasto_a_viaje()
-
-            elif opcion == "3":
-              #  self.mostrar_reporte_diario()
-              print("no hay")
-
-            elif opcion == "4":
-              #  self.mostrar_reporte_por_tipo()
-                print('no hay')
-            elif opcion == "5":
-                print("Saliendo de la aplicación. ¡Buen viaje!")
-                break
+                self.viaje_controller.lista_viajes()
             else:
-                print("Opción no válida. Por favor, seleccione una opción del 1 al 5.")
+                print("Opción no válida. Por favor, seleccione una opción del 1 al 2.")
+
+    def mostrar_menu_viaje_Creado(self):
+        while True:
+            print("\nMenu de la aplicación de registro de gastos de viaje")
+            print("1. Añadir un gasto")
+            print("2. Finalizar viaje")
+            opcion = input("Seleccione una opción: ")
+            if opcion == "1":
+                self.formulario_crear_gasto()
+            elif opcion == "2":
+                self.salir()
+                print("Finalizando viaje")
+            else:
+                print("Opción no válida. Por favor, seleccione una opción del 1 al 2.")
+    
+    def mostrar_menu_reporte(self):
+        reporte = ReporteController(self.viaje_controller.get_viaje())
+        while True:
+            opcion = input("¿Qué reporte desea ver? (Ingrese el número correspondiente):\n"
+                                    "1. Reporte diario\n"
+                                    "2. Reporte por tipo de gasto\n"
+                                    "2. Volver al inicio\n"
+                                    "Seleccione una opción: ")
+            if opcion == "1":
+                reporte.generar_reporte_diario()
+            elif opcion == "2":
+                reporte.generar_reporte_por_tipo()
+            elif opcion == "3":
+                self.mostrar_menu()
+            else:
+                print("Opción no válida. Por favor, seleccione una opción del 1 al 3.")
+            

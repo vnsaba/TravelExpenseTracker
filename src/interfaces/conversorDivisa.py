@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class ConversorMoneda(ABC):
+class ConversorDivisa(ABC):
     """
         clase abstracta para la conversion de moneda
     """
