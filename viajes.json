@@ -136,5 +136,36 @@
                 "tipo_gasto": "COMPRAS"
             }
         ]
+    },
+    {
+        "numero_viaje": "2b455a21-7ab2-4e96-aba5-227605f32d00",
+        "destino": "Irlanda",
+        "divisa": "USD",
+        "fecha_inicio": "2024-06-12 00:00:00",
+        "fecha_fin": "2024-06-25 00:00:00",
+        "presupuesto_diario": 982195.0,
+        "gastos": [
+            {
+                "fecha": "2024-06-13 00:00:00",
+                "valor": 640391.14,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "ALOJAMIENTO"
+            },
+            {
+                "fecha": "2024-06-15 00:00:00",
+                "valor": 699322.8400000001,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "ALIMENTACION"
+            }
+        ]
+    },
+    {
+        "numero_viaje": "83a0a414-3406-4d2f-97c8-40d75d48d33e",
+        "destino": "Bogotá",
+        "divisa": "USD",
+        "fecha_inicio": "2024-06-15 00:00:00",
+        "fecha_fin": "2024-06-20 00:00:00",
+        "presupuesto_diario": 983497.15,
+        "gastos": []
     }
 ]

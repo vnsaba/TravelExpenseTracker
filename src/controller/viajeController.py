@@ -1,6 +1,9 @@
+import logging
+from ..enums.TipoMoneda import TipoMoneda
 from ..utils.fileManager import FileManager
 from datetime import datetime
 from ..entity.Viaje import Viaje
+from ..entity.Gasto import Gasto
 from .ControllerConversorMoneda import ControllerConversorMoneda
 
 class ViajeController():
@@ -11,7 +14,7 @@ class ViajeController():
         self.file_manager = FileManager()
         self.__viajes = self.file_manager.cargar_viajes()
             
-    def registrar_viaje(self, numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto):
+    def registrar_viaje(self, destino, divisa, fecha_inicio, fecha_fin, presupuesto):
         """
         Registra un nuevo viaje con los detalles proporcionados.
 
@@ -27,15 +30,20 @@ class ViajeController():
             bool: True si el viaje fue registrado exitosamente, False si no se pudo registrar.
         """
         self.validar_presupuesto(presupuesto)
-        
+        self.validar_divisa(divisa)
+    
         presupuesto = ControllerConversorMoneda.obtener_conversor(divisa, presupuesto)
-
+  
         if self.verificar_fecha_inicio(fecha_inicio) and self.verificar_fecha_final(fecha_fin, fecha_inicio) and self.verificar_destino(destino):
-            if self.verificar_fecha_viaje(fecha_inicio, fecha_fin):
-                self.__viaje = Viaje(numero, destino, divisa, fecha_inicio, fecha_fin, presupuesto)
-                self.__viajes.append(self.__viaje)
-                return True
+            self.__viaje = Viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+            self.__viajes.append(self.__viaje)
+            self.guardar_viajes_en_archivo()
+            return True
         return False
+    
+    def validar_divisa(self, divisa):
+        if divisa not in TipoMoneda.__members__.values():
+            raise AttributeError("La divisa no es válida.")
     
     def validar_presupuesto(self, presupuesto: float):
         """
@@ -109,7 +117,7 @@ class ViajeController():
         - False si hay algún viaje con la misma fecha de inicio o final. True de lo contrario.
         """
         for viaje in self.__viajes:  
-            if viaje.get_fecha_inicio() == fecha_inicio or viaje.get_fecha_fin() == fecha_fin:
+            if viaje.get_fecha_inicio() == fecha_inicio or viaje.get_fecha_final() == fecha_fin:
                 return False
         return True
 
@@ -152,7 +160,7 @@ class ViajeController():
         return self.__viaje.get_divisa()
               
 
-    def adicionar_gasto(self, gasto):
+    def adicionar_gasto(self, gasto: Gasto):
         """
         Añade un gasto al viaje actual si la fecha del gasto está dentro del rango de fechas del viaje.
 
@@ -167,7 +175,7 @@ class ViajeController():
             return True
         return False
     
-    def get_viaje (self):
+    def get_viaje(self):
         """
         Obtiene el viaje actual.
 

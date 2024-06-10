@@ -21,7 +21,7 @@ class GastoController():
         - True si hay un viaje creado, False de lo contrario.
         """
         if self.__viaje_controller.get_viaje() is None:
-            print("Primero debe crear un viaje.", self.__viaje_controller.get_viaje())
+            print("Primero debe crear un viaje.")
             return False
         return True
     
@@ -40,7 +40,8 @@ class GastoController():
                True si el gasto se registró correctamente, False de lo contrario.
         """
         tipo_divisa = self.__viaje_controller.divisa()
-        if self.verificar_viaje() :
+        if self.verificar_viaje():
+            print("Registrando gasto...")
             if tipo_divisa != TipoMoneda.COP:
                 monto = ControllerConversorMoneda.obtener_conversor(tipo_divisa, monto)
             gasto = Gasto(fecha, monto, metodo_pago, tipo_gasto)
