@@ -63,7 +63,6 @@ class Viaje():
 
     def adicionar_gasto(self, gasto: Gasto):
         self.__gastos.append(gasto)
-       # self.actualizar_diferencia_presupuesto()
     
     def imprimir_gastos(self):
         for gasto in self.__gastos:

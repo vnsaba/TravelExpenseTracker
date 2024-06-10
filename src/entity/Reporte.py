@@ -1,43 +1,42 @@
+from ..enums.MetodoPago import MetodoPago
+from ..enums.TipoGasto import TipoGasto
+
 class Reporte:
     def __init__(self, viaje):
         self.viaje = viaje  
 
     def reporte_diario(self):
-        """
-        Genera y muestra un reporte diario de los gastos del viaje.
-
-        El reporte incluye la cantidad total gastada en efectivo y con tarjeta para cada fecha.
-
-        """
+        """Genera y muestra un reporte diario de los gastos del viaje."""
         print(f"Reporte Diario para el Viaje a {self.viaje.get_destino()}")
         gastos_por_fecha = {}
         for gasto in self.viaje.get_gastos():
-            if gasto.get_fecha() not in gastos_por_fecha:
-                gastos_por_fecha[gasto.get_fecha()] = {'efectivo': 0, 'tarjeta': 0}
-            if gasto.get_metodo_pago() == 'efectivo':
-                gastos_por_fecha[gasto.get_fecha()]['efectivo'] += gasto.get_valor()
-            else:
-                gastos_por_fecha[gasto.get_fecha()]['tarjeta'] += gasto.get_valor()
+            fecha = gasto.get_fecha()
+            metodo_pago = gasto.get_metodo_pago()  
+            valor = gasto.get_valor()
+
+            if fecha not in gastos_por_fecha:
+                gastos_por_fecha[fecha] = {MetodoPago.EFECTIVO.value: 0, MetodoPago.TARJETA.value: 0}
+            
+            gastos_por_fecha[fecha][metodo_pago.value] += valor
 
         for fecha, pagos in gastos_por_fecha.items():
-            print(f"Fecha: {fecha}, Efectivo: {pagos['efectivo']}, Tarjeta: {pagos['tarjeta']}")
+            total_dia = pagos[MetodoPago.EFECTIVO.value] + pagos[MetodoPago.TARJETA.value]
+            print(f"Fecha: {fecha}, {MetodoPago.EFECTIVO.value}: {pagos[MetodoPago.EFECTIVO.value]}, {MetodoPago.TARJETA.value}: {pagos[MetodoPago.TARJETA.value]}, Total: {total_dia}")
 
     def reporte_por_tipo(self):
-        """
-        Genera y muestra un reporte por tipo de gasto del viaje.
-
-        El reporte incluye la cantidad total gastada en efectivo y con tarjeta para cada tipo de gasto.
-
-        """
-        print(f"Reporte por Tipo de Gasto para el Viaje a {self.viaje.destino}")
+        """Genera y muestra un reporte por tipo de gasto del viaje."""
+        print(f"Reporte por Tipo de Gasto para el Viaje a {self.viaje.get_destino()}")
         gastos_por_tipo = {}
         for gasto in self.viaje.get_gastos():
-            if gasto.get_tipo_gasto() not in gastos_por_tipo:
-                gastos_por_tipo[gasto.get_tipo_gasto()] = {'efectivo': 0, 'tarjeta': 0}
-            if gasto.get_metodo_pago() == 'efectivo':
-                gastos_por_tipo[gasto.get_tipo_gasto()]['efectivo'] += gasto.get_valor()
-            else:
-                gastos_por_tipo[gasto.get_tipo_gasto()]['tarjeta'] += gasto.get_valor()
+            tipo_gasto = gasto.get_tipo_gasto()
+            metodo_pago = gasto.get_metodo_pago()
+            valor = gasto.get_valor()
+
+            if tipo_gasto not in gastos_por_tipo:
+                gastos_por_tipo[tipo_gasto] = {MetodoPago.EFECTIVO.value: 0, MetodoPago.TARJETA.value: 0}
+            
+            gastos_por_tipo[tipo_gasto][metodo_pago.value] += valor
 
         for tipo, pagos in gastos_por_tipo.items():
-            print(f"Tipo: {tipo}, Efectivo: {pagos['efectivo']}, Tarjeta: {pagos['tarjeta']}")
+            total_tipo = pagos[MetodoPago.EFECTIVO.value] + pagos[MetodoPago.TARJETA.value]
+            print(f"Tipo: {tipo.value}, {MetodoPago.EFECTIVO.value}: {pagos[MetodoPago.EFECTIVO.value]}, {MetodoPago.TARJETA.value}: {pagos[MetodoPago.TARJETA.value]}, Total: {total_tipo}")

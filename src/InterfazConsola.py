@@ -20,11 +20,7 @@ class InterfazConsola():
         presupuesto = self._ingresar_valor("Ingrese el presupuesto diario del viaje: ")
         divisa = self._seleccionar_opcion("Monedas disponibles:", TipoMoneda)
 
-<<<<<<< HEAD
         self.guardar_viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto)
-=======
-        self.guardar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto)
->>>>>>> 220712b18b17dc39aa2fe980301b6fda7432c35b
 
     def guardar_viaje (self, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario):
         """
@@ -37,15 +33,11 @@ class InterfazConsola():
                 fecha_fin (datetime): Fecha de finalización del viaje.
                 presupuesto_diario (float): Presupuesto diario asignado para el viaje.
         """
-<<<<<<< HEAD
         viaje_creado = self.viaje_controller.registrar_viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
-=======
-        viaje_creado = self.viaje_controller.registrar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
->>>>>>> 220712b18b17dc39aa2fe980301b6fda7432c35b
         if viaje_creado:
             print("¡Buen viaje!")
             self.viaje_existe = True
-            self.mostrar_menu_viaje_Creado()
+            self.mostrar_menu_viaje_creado()
         else:
             print("El viaje no pudo ser registrado debido a errores en las fechas o el destino.")
             
@@ -142,23 +134,26 @@ class InterfazConsola():
         """Guarda la información del viaje en el archivo antes de salir de la aplicación."""
         if self.viaje_controller.guardar_viajes_en_archivo():
             print("¡La información del viaje se ha guardado correctamente!")
+            self.mostrar_menu_reporte()
         else:
             print("Error al guardar la información del viaje en el archivo.")
     
     def mostrar_menu(self):
+        """Muestra el menú principal de la aplicación de viajes."""
         while True:
             print("\nMenu de la aplicación")
             print("1. Crear un nuevo viaje")
             print("2. Ver historial de viajes")
             opcion = input("Seleccione una opción: ")
             if opcion == "1":
-               self.formulario_crear_viaje()
+                self.formulario_crear_viaje()
             elif opcion == "2":
                 self.viaje_controller.lista_viajes()
             else:
                 print("Opción no válida. Por favor, seleccione una opción del 1 al 2.")
 
-    def mostrar_menu_viaje_Creado(self):
+    def mostrar_menu_viaje_creado(self):
+        """ Muestra el menú principal para la aplicación de registro de gastos de viaje."""
         while True:
             print("\nMenu de la aplicación de registro de gastos de viaje")
             print("1. Añadir un gasto")
@@ -174,12 +169,13 @@ class InterfazConsola():
                 print("Opción no válida. Por favor, seleccione una opción del 1 al 2.")
     
     def mostrar_menu_reporte(self):
+        """Muestra un menú interactivo para seleccionar y generar diferentes tipos de reportes de gastos."""
         reporte = ReporteController(self.viaje_controller.get_viaje())
         while True:
             opcion = input("¿Qué reporte desea ver? (Ingrese el número correspondiente):\n"
                                     "1. Reporte diario\n"
                                     "2. Reporte por tipo de gasto\n"
-                                    "2. Volver al inicio\n"
+                                    "3. Volver al inicio\n"
                                     "Seleccione una opción: ")
             if opcion == "1":
                 reporte.generar_reporte_diario()

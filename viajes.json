@@ -1,43 +1,135 @@
 [
     {
-        "numero_viaje": "2",
-        "destino": "canada",
-        "divisa": "USD",
-        "fecha_inicio": "2024-10-10 00:00:00",
-        "fecha_fin": "2024-10-20 00:00:00",
-        "presupuesto_diario": 39287.8,
+        "numero_viaje": "a6855bbb-57b3-4592-b45b-a0abf45aaf0f",
+        "destino": "españa",
+        "divisa": "COP",
+        "fecha_inicio": "2024-09-09 00:00:00",
+        "fecha_fin": "2024-09-20 00:00:00",
+        "presupuesto_diario": 450000.0,
         "gastos": [
             {
-                "fecha": "2024-10-12 00:00:00",
-                "valor": 19643.9,
+                "fecha": "2024-09-11 00:00:00",
+                "valor": 45000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "TRANSPORTE"
+            },
+            {
+                "fecha": "2024-09-12 00:00:00",
+                "valor": 4500000.0,
                 "metodo_pago": "EFECTIVO",
                 "tipo_gasto": "ALOJAMIENTO"
-            }
-        ]
-    },
-    {
-        "numero_viaje": "1",
-        "destino": "medellin",
-        "divisa": "COP",
-        "fecha_inicio": "2024-11-20 00:00:00",
-        "fecha_fin": "2024-11-30 00:00:00",
-        "presupuesto_diario": 500000.0,
-        "gastos": [
+            },
             {
-                "fecha": "2024-11-21 00:00:00",
-                "valor": 200000.0,
-                "metodo_pago": "EFECTIVO",
+                "fecha": "2024-09-09 00:00:00",
+                "valor": 25000.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "COMPRAS"
+            },
+            {
+                "fecha": "2024-09-15 00:00:00",
+                "valor": 600000.0,
+                "metodo_pago": "TARJETA",
                 "tipo_gasto": "ALIMENTACION"
             }
         ]
     },
     {
-        "numero_viaje": "3",
-        "destino": "bogota",
+        "numero_viaje": "c22a2f08-5f36-4673-b0b6-db16c11109bd",
+        "destino": "Canada",
         "divisa": "COP",
         "fecha_inicio": "2024-09-09 00:00:00",
-        "fecha_fin": "2024-09-30 00:00:00",
-        "presupuesto_diario": 400000.0,
+        "fecha_fin": "2024-09-20 00:00:00",
+        "presupuesto_diario": 1500000.0,
+        "gastos": [
+            {
+                "fecha": "2024-09-11 00:00:00",
+                "valor": 450000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "TRANSPORTE"
+            },
+            {
+                "fecha": "2024-09-11 00:00:00",
+                "valor": 890000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "ALOJAMIENTO"
+            },
+            {
+                "fecha": "2024-09-13 00:00:00",
+                "valor": 500000000.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "ENTRETENIMIENTO"
+            },
+            {
+                "fecha": "2024-09-12 00:00:00",
+                "valor": 892222.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "COMPRAS"
+            }
+        ]
+    },
+    {
+        "numero_viaje": "c622dabe-d44b-475e-a8ee-5a8f992d60d5",
+        "destino": "canada",
+        "divisa": "COP",
+        "fecha_inicio": "2024-09-09 00:00:00",
+        "fecha_fin": "2024-09-12 00:00:00",
+        "presupuesto_diario": 4500000.0,
+        "gastos": [
+            {
+                "fecha": "2024-09-10 00:00:00",
+                "valor": 450000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "TRANSPORTE"
+            },
+            {
+                "fecha": "2024-09-10 00:00:00",
+                "valor": 4892222.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "ENTRETENIMIENTO"
+            }
+        ]
+    },
+    {
+        "numero_viaje": "2b0a84be-c7fd-484a-b4de-03754c01441b",
+        "destino": "españa",
+        "divisa": "COP",
+        "fecha_inicio": "2024-09-09 00:00:00",
+        "fecha_fin": "2024-09-20 00:00:00",
+        "presupuesto_diario": 500000.0,
+        "gastos": [
+            {
+                "fecha": "2024-09-11 00:00:00",
+                "valor": 10000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "TRANSPORTE"
+            },
+            {
+                "fecha": "2024-09-11 00:00:00",
+                "valor": 200000.0,
+                "metodo_pago": "EFECTIVO",
+                "tipo_gasto": "ALOJAMIENTO"
+            },
+            {
+                "fecha": "2024-09-12 00:00:00",
+                "valor": 100000.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "ENTRETENIMIENTO"
+            },
+            {
+                "fecha": "2024-09-12 00:00:00",
+                "valor": 200000.0,
+                "metodo_pago": "TARJETA",
+                "tipo_gasto": "ALIMENTACION"
+            }
+        ]
+    },
+    {
+        "numero_viaje": "1816684b-e2f3-441e-946f-d1714aca7090",
+        "destino": "españa",
+        "divisa": "COP",
+        "fecha_inicio": "2024-09-09 00:00:00",
+        "fecha_fin": "2024-09-20 00:00:00",
+        "presupuesto_diario": 500000.0,
         "gastos": [
             {
                 "fecha": "2024-09-11 00:00:00",
@@ -46,126 +138,11 @@
                 "tipo_gasto": "TRANSPORTE"
             },
             {
-                "fecha": "2024-09-10 00:00:00",
+                "fecha": "2024-09-12 00:00:00",
                 "valor": 200000.0,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ALOJAMIENTO"
-            },
-            {
-                "fecha": "2024-09-11 00:00:00",
-                "valor": 400000.0,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ALIMENTACION"
-            },
-            {
-                "fecha": "2024-09-11 00:00:00",
-                "valor": 10000.0,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ENTRETENIMIENTO"
-            },
-            {
-                "fecha": "2024-09-11 00:00:00",
-                "valor": 20000.0,
                 "metodo_pago": "TARJETA",
-                "tipo_gasto": "COMPRAS"
-            },
-            {
-                "fecha": "2024-09-12 00:00:00",
-                "valor": 20000.0,
-                "metodo_pago": "TARJETA",
-                "tipo_gasto": "COMPRAS"
-            },
-            {
-                "fecha": "2024-09-15 00:00:00",
-                "valor": 400000.0,
-                "metodo_pago": "TARJETA",
-                "tipo_gasto": "COMPRAS"
-            },
-            {
-                "fecha": "2024-09-12 00:00:00",
-                "valor": 1.0,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ALOJAMIENTO"
-            }
-        ]
-    },
-    {
-        "numero_viaje": "1",
-        "destino": "canada",
-        "divisa": "USD",
-        "fecha_inicio": "2024-09-09 00:00:00",
-        "fecha_fin": "2024-09-20 00:00:00",
-        "presupuesto_diario": 176795.1,
-        "gastos": [
-            {
-                "fecha": "2024-09-11 00:00:00",
-                "valor": 15715.12,
-                "metodo_pago": "EFECTIVO",
                 "tipo_gasto": "TRANSPORTE"
             }
         ]
-    },
-    {
-        "numero_viaje": "1",
-        "destino": "españa",
-        "divisa": "EUR",
-        "fecha_inicio": "2024-09-09 00:00:00",
-        "fecha_fin": "2024-09-20 00:00:00",
-        "presupuesto_diario": 17100.4988,
-        "gastos": [
-            {
-                "fecha": "2024-09-09 00:00:00",
-                "valor": 4275.1247,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ALOJAMIENTO"
-            }
-        ]
-    },
-    {
-        "numero_viaje": "1",
-        "destino": "españa",
-        "divisa": "EUR",
-        "fecha_inicio": "2024-09-09 00:00:00",
-        "fecha_fin": "2024-09-20 00:00:00",
-        "presupuesto_diario": 1710049880.0000002,
-        "gastos": [
-            {
-                "fecha": "2024-09-11 00:00:00",
-                "valor": 2137562350.0000002,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "COMPRAS"
-            }
-        ]
-    },
-    {
-        "numero_viaje": "2b455a21-7ab2-4e96-aba5-227605f32d00",
-        "destino": "Irlanda",
-        "divisa": "USD",
-        "fecha_inicio": "2024-06-12 00:00:00",
-        "fecha_fin": "2024-06-25 00:00:00",
-        "presupuesto_diario": 982195.0,
-        "gastos": [
-            {
-                "fecha": "2024-06-13 00:00:00",
-                "valor": 640391.14,
-                "metodo_pago": "EFECTIVO",
-                "tipo_gasto": "ALOJAMIENTO"
-            },
-            {
-                "fecha": "2024-06-15 00:00:00",
-                "valor": 699322.8400000001,
-                "metodo_pago": "TARJETA",
-                "tipo_gasto": "ALIMENTACION"
-            }
-        ]
-    },
-    {
-        "numero_viaje": "83a0a414-3406-4d2f-97c8-40d75d48d33e",
-        "destino": "Bogotá",
-        "divisa": "USD",
-        "fecha_inicio": "2024-06-15 00:00:00",
-        "fecha_fin": "2024-06-20 00:00:00",
-        "presupuesto_diario": 983497.15,
-        "gastos": []
     }
 ]

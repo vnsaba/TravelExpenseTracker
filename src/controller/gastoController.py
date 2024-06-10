@@ -39,11 +39,11 @@ class GastoController():
         return:
                True si el gasto se registró correctamente, False de lo contrario.
         """
+        self.validar_monto(monto)
         tipo_divisa = self.__viaje_controller.divisa()
         if self.verificar_viaje():
             print("Registrando gasto...")
-            if tipo_divisa != TipoMoneda.COP:
-                monto = ControllerConversorMoneda.obtener_conversor(tipo_divisa, monto)
+            monto = self.verificar_divisa(tipo_divisa, monto)
             gasto = Gasto(fecha, monto, metodo_pago, tipo_gasto)
             self.valor = monto
             return self.__viaje_controller.adicionar_gasto(gasto)            
@@ -55,5 +55,20 @@ class GastoController():
         return: La diferencia entre el presupuesto diario y el  gasto registrado.
         """
         return self.__viaje_controller.get_viaje().get_presupuesto_diario() - self.valor
+    
+    def validar_monto (self, monto):
+        """
+            Verifica que el monto proporcionado sea no negativo.
+            params: monto : El monto a validar.
+            Excepciones:
+                ValueError: Se lanza si el `monto` proporcionado es menor que cero, indicando que el monto no es válido.
+        """
+        if monto < 0 :
+            raise ValueError("El monto debe ser mayor que cero.")
 
+    def verificar_divisa(self,tipo_divisa, monto):
+        if tipo_divisa != TipoMoneda.COP:
+                monto = ControllerConversorMoneda.obtener_conversor(tipo_divisa, monto)
+        return monto
+    
        

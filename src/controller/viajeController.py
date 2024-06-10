@@ -1,4 +1,3 @@
-import logging
 from ..enums.TipoMoneda import TipoMoneda
 from ..utils.fileManager import FileManager
 from datetime import datetime
@@ -35,12 +34,17 @@ class ViajeController():
   
         if self.verificar_fecha_inicio(fecha_inicio) and self.verificar_fecha_final(fecha_fin, fecha_inicio) and self.verificar_destino(destino):
             self.__viaje = Viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto)
-            self.__viajes.append(self.__viaje)
-            self.guardar_viajes_en_archivo()
             return True
         return False
     
     def validar_divisa(self, divisa):
+        """
+        Verifica si la divisa proporcionada es válida según la enumeración `TipoMoneda`.
+
+        params: divisa : La divisa a validar.
+        Excepciones:
+            AttributeError:Se lanza si la divisa no está en `TipoMoneda`.
+        """
         if divisa not in TipoMoneda.__members__.values():
             raise AttributeError("La divisa no es válida.")
     
@@ -103,27 +107,21 @@ class ViajeController():
         return True
     
     def buscar_viaje(self, numero: str):
-        for viaje in self.__viajes:
-            if viaje.get_numero() == numero:
-                return viaje
+        if self.__viajes is not None:
+            for viaje in self.__viajes:
+                if viaje.get_numero() == numero:
+                    return viaje
         return None
-
-    def verificar_fecha_viaje(self, fecha_inicio, fecha_fin):
-        """
-        Verifica si hay algún viaje con la misma fecha de inicio o la misma fecha final.
-
-        Retorna:
-        - False si hay algún viaje con la misma fecha de inicio o final. True de lo contrario.
-        """
-        for viaje in self.__viajes:  
-            if viaje.get_fecha_inicio() == fecha_inicio or viaje.get_fecha_final() == fecha_fin:
-                return False
-        return True
 
     
     def esta_activo(self, numero: str):
+        """
+        Verifica si un viaje está activo dado su número de identificación.
+        params: numero :El número de identificación único del viaje a verificar.
+        return: True si el viaje existe y está activo, False en caso contrario.
+        """
         viaje = self.buscar_viaje(numero)
-        if viaje == None:
+        if viaje is  None:
             return False
         return viaje.get_activo()
 
@@ -136,12 +134,10 @@ class ViajeController():
             viaje_actual: Número del viaje actual.
 
         Returns:
-            bool: True si la fecha del gasto está dentro del rango de fechas del viaje actual, False en caso contrario.
+            bool: True fecha del gasto está dentro del rango de fechas del viaje actual, False en caso contrario.
         """
-        for viaje in self.__viajes:
-            if viaje.get_numero() == viaje_actual and viaje.get_activo():
-                if viaje.get_fecha_inicio() <= fecha_gasto <= viaje.get_fecha_final():
-                    return True
+        if self.__viaje.get_fecha_inicio() <= fecha_gasto <= self.__viaje.get_fecha_final():
+                return True
         return False
 
     def divisa(self):
@@ -216,7 +212,7 @@ class ViajeController():
             print(f"Viaje a {viaje.get_destino()} - Número: {viaje.get_numero()}")
             print(f"  - Fechas: {viaje.get_fecha_inicio()} a {viaje.get_fecha_final()}")
             print(f"  - Presupuesto Diario: {viaje.get_presupuesto_diario()} {viaje.get_divisa().name}")
-            print(f"  - Gastos:")
+            print("   - Gastos:")
             for gasto in viaje.get_gastos():
                 print(f"    - {gasto.get_tipo_gasto().name}: {gasto.get_valor()} {viaje.get_divisa().name} (Fecha: {gasto.get_fecha()})")
             print()
