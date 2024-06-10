@@ -19,7 +19,6 @@ class ViajeController():
         Registra un nuevo viaje con los detalles proporcionados.
 
         params:
-            numero (int): Número único asignado al viaje.
             destino (str): Nombre del destino del viaje.
             divisa (TipoDivisa): Tipo de divisa en la que se manejará el presupuesto del viaje.
             fecha_inicio (datetime): Fecha de inicio del viaje.

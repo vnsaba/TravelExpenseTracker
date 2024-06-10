@@ -5,7 +5,7 @@ class ConversorDivisa(ABC):
         clase abstracta para la conversion de moneda
     """
     @abstractmethod
-    def obtener_tasa_conversion(self, tipo_moneda):
+    def obtener_tasa_conversion(self):
         """
             Metodo abstracto para obtener la tasa de conversion de una moneda en especifico
 
@@ -14,7 +14,7 @@ class ConversorDivisa(ABC):
         pass
 
     @abstractmethod
-    def convertir(self, monto, tipo_moneda):
+    def convertir(self, monto):
         """
            Método abstracto para convertir una cantidad a una moneda específica.
 

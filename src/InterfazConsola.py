@@ -20,21 +20,28 @@ class InterfazConsola():
         presupuesto = self._ingresar_valor("Ingrese el presupuesto diario del viaje: ")
         divisa = self._seleccionar_opcion("Monedas disponibles:", TipoMoneda)
 
+<<<<<<< HEAD
         self.guardar_viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+=======
+        self.guardar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto)
+>>>>>>> 220712b18b17dc39aa2fe980301b6fda7432c35b
 
     def guardar_viaje (self, destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario):
         """
             Registra un nuevo viaje con los detalles proporcionados.
 
             params:
-                numero (int): Número único asignado al viaje.
                 destino (str): Nombre del destino del viaje.
                 divisa (TipoDivisa): Tipo de divisa en la que se manejará el presupuesto del viaje.
                 fecha_inicio (datetime): Fecha de inicio del viaje.
                 fecha_fin (datetime): Fecha de finalización del viaje.
                 presupuesto_diario (float): Presupuesto diario asignado para el viaje.
         """
+<<<<<<< HEAD
         viaje_creado = self.viaje_controller.registrar_viaje(destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
+=======
+        viaje_creado = self.viaje_controller.registrar_viaje( destino, divisa, fecha_inicio, fecha_fin, presupuesto_diario)
+>>>>>>> 220712b18b17dc39aa2fe980301b6fda7432c35b
         if viaje_creado:
             print("¡Buen viaje!")
             self.viaje_existe = True
