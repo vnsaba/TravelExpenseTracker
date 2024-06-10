@@ -67,6 +67,14 @@ class GastoController():
             raise ValueError("El monto debe ser mayor que cero.")
 
     def verificar_divisa(self,tipo_divisa, monto):
+        """        
+            Verifica la divisa del monto y lo convierte si es necesario.
+            params 
+                tipo_divisa : La divisa del monto.
+                monto : El monto que se desea convertir.
+
+            return: monto convertido a pesos colombianos (COP).
+        """
         if tipo_divisa != TipoMoneda.COP:
                 monto = ControllerConversorMoneda.obtener_conversor(tipo_divisa, monto)
         return monto

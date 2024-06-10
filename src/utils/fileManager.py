@@ -18,7 +18,6 @@ class FileManager:
             bool: True si la operación fue exitosa, False en caso de error.
         """
         try:
-            # Cargar viajes existentes si el archivo existe
             existing_data = []
             if self.existe_archivo():
                 with self.file_path.open('r', encoding='utf-8') as file:
@@ -44,6 +43,10 @@ class FileManager:
         return self.file_path.exists()
 
     def cargar_viajes(self):
+        """        
+            Carga los viajes desde el archivo si existe.
+            return: list:Una lista de objetos Viaje cargados desde el archivo.
+        """
         if self.existe_archivo():
             with self.file_path.open('r', encoding='utf-8') as file:
                 data = json.load(file)
